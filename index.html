@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Needed for visualization to run. Will be removed soon -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="module" src="src/zoomdata-visualization.js"></script>
+  </head>
+  <body style="margin: 0">
+    <zoomdata-visualization style="position: absolute; width: 800px; height: 800px;"
+      key="<your_code>"
+      host="<your_zoomdata_host>"
+      secure="true"
+      port="8443"
+      path="/zoomdata"
+      source-name="<your_source_name>"
+      visualization="Bars"
+      control-right
+    />
+
+  </body>
+</html>
