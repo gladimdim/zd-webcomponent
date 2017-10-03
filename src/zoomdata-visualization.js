@@ -2,7 +2,7 @@ import {Element as PolymerElement} from '../node_modules/@polymer/polymer/polyme
 import * as sdk from '../node_modules/zoomdata-client/distribute/sdk/zoomdata-client.js';
 import * as AggregationControl from './aggregationpickercontrol.js';
 
-export class MyApp extends PolymerElement {
+export class ZoomdataVisualization extends PolymerElement {
     static get template() {
         return `
         <style>
@@ -114,10 +114,10 @@ async function initializeClient(app) {
     return client;
 }
 
-const visualize = async (doc) => {
-    const client = await initializeClient(doc);
+const visualize = async (component) => {
+    const client = await initializeClient(component);
     const query = await client.createQuery(
-        {name: doc.sourceName},
+        {name: component.sourceName},
         {
             groups: [
                 {
@@ -138,32 +138,32 @@ const visualize = async (doc) => {
         }
     );
     const visualization = await client.visualize({
-        element: doc.$.visContainer,
+        element: component.$.visContainer,
         query: query,
-        visualization: doc.visualization,
+        visualization: component.visualization,
         variables: {}
     });
     return visualization;
 };
 
 
-const initApp = async (doc) => {
-    const visualization = await visualize(doc);
+const initApp = async (component) => {
+    const visualization = await visualize(component);
     visualization.query.validationErrors.subscribeOnNext((err) => {
         console.log(err);
     });
-    const rootDom = doc.$.controls;
+    const rootDom = component.$.controls;
     const metaData = visualization.metaThread.getLatestResponse();
     const aggrs = metaData.getAttrAggregations().filter((aggr) => {
         return aggr.getType() === "TERMS";
     });
 
-    doc.$.controls.aggregations = aggrs;
-    doc.$.controls.addEventListener("selected", (e) => {
+    component.$.controls.aggregations = aggrs;
+    component.$.controls.addEventListener("selected", (e) => {
         const firstAggregation = visualization.query.getAggregations(0);
         firstAggregation[0].field.name = e.detail;
         visualization.query.setAggregation(0, 0, firstAggregation[0]);
     });
 }
 
-customElements.define("zoomdata-visualization", MyApp);
+customElements.define("zoomdata-visualization", ZoomdataVisualization);
