@@ -7,7 +7,7 @@
   "dependencies": {
     "@polymer/polymer": "next",
     "@webcomponents/webcomponentsjs": "^1.0.10",
-    "zoomdata-client": "*"
+    "zoomdata-client": "^2.6.1"
   },
   "resolutions": {
     "@webcomponents/webcomponentsjs": "1.0.10",

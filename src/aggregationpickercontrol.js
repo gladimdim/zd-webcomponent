@@ -15,6 +15,9 @@ class AggregationPickerControl extends PolymerElement {
             aggregations: {
                 observer: "aggregationsSet",
                 Type: Array
+            },
+            currentAggregation: {
+                Type: String
             }
         };
     }
@@ -24,6 +27,9 @@ class AggregationPickerControl extends PolymerElement {
         rootElement.setAttribute("name", "aggregations");
         for (let name of aggrNames) {
             const optionElement = document.createElement("option");
+            if (this.currentAggregation === name) {
+                optionElement.setAttribute("selected", "selected");
+            }
             optionElement.textContent = name;
             rootElement.appendChild(
                 optionElement

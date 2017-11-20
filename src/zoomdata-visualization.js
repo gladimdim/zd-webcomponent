@@ -27,30 +27,6 @@ export class ZoomdataVisualization extends PolymerElement {
                 width: 100%;
                 height: 100%;
             }
-            .vis-content-left {
-                grid-column-start: 1;
-                grid-column-end: 1;
-                grid-row-start: 1;
-                grid-row-end: 4;
-                transform-origin: 0 0;
-                transform:  translateY(100%) rotate(-90deg);
-
-            }
-            .vis-content-right {
-                grid-column-start: 3;
-                grid-column-end: 4;
-                grid-row-start: 1;
-                grid-row-end: 4;
-                transform-origin: 0 0;
-                transform: rotate(90deg);
-
-            }
-            .vis-content-bottom {
-                grid-column-start: 1;
-                grid-column-end: 4;
-                grid-row-start: 3;
-                grid-row-end: 3;
-            }
         </style>
         <div class="wrapper">
             <aggregation-picker-control id="controls" class="vis-content-top"></aggregation-picker-control>
@@ -158,6 +134,7 @@ const initApp = async (component) => {
         return aggr.getType() === "TERMS";
     });
 
+    component.$.controls.currentAggregation = visualization.query.getAggregations(0)[0].field.name;
     component.$.controls.aggregations = aggrs;
     component.$.controls.addEventListener("selected", (e) => {
         const firstAggregation = visualization.query.getAggregations(0);
